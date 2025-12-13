@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WanderAI - Trip Planner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              'neo': {
+                bg: 'var(--neo-bg)',
+                black: 'var(--neo-black)',
+                white: 'var(--neo-white)',
+                pink: 'var(--neo-pink)',
+                blue: 'var(--neo-blue)',
+                yellow: 'var(--neo-yellow)',
+                green: 'var(--neo-green)',
+                purple: 'var(--neo-purple)',
+                orange: 'var(--neo-orange)',
+                darkgray: '#1E1E1E'
+              }
+            },
+            fontFamily: {
+              sans: ['var(--neo-font-sans)', 'Public Sans', 'sans-serif'],
+              display: ['var(--neo-font-display)', 'Lexend Mega', 'sans-serif'],
+            },
+            boxShadow: {
+              'neo': '4px 4px 0px 0px var(--neo-black)',
+              'neo-sm': '2px 2px 0px 0px var(--neo-black)',
+              'neo-lg': '8px 8px 0px 0px var(--neo-black)',
+              'neo-white': '4px 4px 0px 0px var(--neo-white)',
+              'neo-sm-white': '2px 2px 0px 0px var(--neo-white)',
+              'neo-lg-white': '8px 8px 0px 0px var(--neo-white)',
+              'neo-dark': '4px 4px 0px 0px #333333',
+              'neo-sm-dark': '2px 2px 0px 0px #333333',
+            },
+            borderWidth: {
+              '3': '3px',
+            },
+            animation: {
+              'slide-up': 'slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+              'marquee': 'marquee 25s linear infinite',
+              'spin-slow': 'spin 3s linear infinite',
+              'print-ticket': 'printTicket 2s cubic-bezier(0.4, 0, 0.2, 1) infinite',
+              'paper-feed': 'paperFeed 0.2s linear infinite',
+            },
+            keyframes: {
+              slideUp: {
+                '0%': { transform: 'translateY(20px)', opacity: 0 },
+                '100%': { transform: 'translateY(0)', opacity: 1 },
+              },
+              marquee: {
+                '0%': { transform: 'translateX(0%)' },
+                '100%': { transform: 'translateX(-100%)' },
+              },
+              printTicket: {
+                '0%': { transform: 'translateY(-100%)' },
+                '10%, 80%': { transform: 'translateY(0%)' },
+                '100%': { transform: 'translateY(150%) rotate(5deg)', opacity: 0 }
+              },
+              paperFeed: {
+                '0%': { backgroundPosition: '0 0' },
+                '100%': { backgroundPosition: '0 4px' }
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Mega:wght@300;400;700;800&family=Public+Sans:wght@400;600;800&family=Playfair+Display:wght@700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --neo-bg: #FFFDF5;
+        --neo-black: #121212;
+        --neo-white: #FFFFFF;
+        --neo-pink: #FF90E8;
+        --neo-blue: #90F2FF;
+        --neo-yellow: #FFCE63;
+        --neo-green: #B0FF90;
+        --neo-purple: #E0B0FF;
+        --neo-orange: #FFAB76;
+        --neo-font-display: 'Lexend Mega';
+        --neo-font-sans: 'Public Sans';
+      }
+
+      body {
+        background-color: var(--neo-bg);
+        color: var(--neo-black);
+        background-image: radial-gradient(var(--neo-black) 1px, transparent 1px);
+        background-size: 24px 24px;
+        overflow: hidden; /* Prevent body scroll */
+        height: 100vh;
+        height: 100dvh; /* Dynamic viewport height for mobile */
+        transition: background-color 0.5s ease;
+      }
+      
+      /* Dark mode body override via class */
+      .dark body {
+        background-color: #050505;
+        color: #e5e5e5;
+        background-image: radial-gradient(#333 1px, transparent 1px);
+      }
+
+      /* Custom Scrollbar for Neo Look */
+      ::-webkit-scrollbar {
+        width: 12px;
+        height: 12px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--neo-bg); 
+        border-left: 2px solid var(--neo-black);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--neo-pink); 
+        border: 2px solid var(--neo-black);
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--neo-yellow); 
+      }
+
+      /* Dark mode scrollbar */
+      .dark ::-webkit-scrollbar-track {
+        background: #000000; 
+        border-left: 2px solid #333;
+      }
+      .dark ::-webkit-scrollbar-thumb {
+        background: #333; 
+        border: 2px solid #555;
+      }
+      .dark ::-webkit-scrollbar-thumb:hover {
+        background: var(--neo-pink); 
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.556.0",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.32.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
+    "react/": "https://aistudiocdn.com/react@^19.2.1/",
+    "react": "https://aistudiocdn.com/react@^19.2.1",
+    "recharts": "https://aistudiocdn.com/recharts@^3.5.1"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
