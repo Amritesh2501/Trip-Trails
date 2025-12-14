@@ -222,9 +222,9 @@ const SmartSuitcase: React.FC = () => {
 
             {/* --- PHASE 1: CONFIGURATION --- */}
             {phase === 'config' && (
-                <div className="flex-1 flex flex-col items-center justify-center p-4 animate-slide-up relative z-10 overflow-y-auto">
+                <div className="flex-1 flex flex-col items-center justify-start md:justify-center p-4 animate-slide-up relative z-10 overflow-y-auto custom-scrollbar">
                     
-                    <div className="w-full max-w-2xl bg-white dark:bg-[#151515] shadow-neo-lg dark:shadow-neo-lg-white border-4 border-neo-black dark:border-neo-white overflow-hidden flex flex-col md:flex-row">
+                    <div className="w-full max-w-2xl bg-white dark:bg-[#151515] shadow-neo-lg dark:shadow-neo-lg-white border-4 border-neo-black dark:border-neo-white overflow-hidden flex flex-col md:flex-row my-4 md:my-0 shrink-0">
                         
                         {/* Left Side: Destination & Date (The "Ticket" Stub) */}
                         <div className="w-full md:w-5/12 bg-neo-black dark:bg-[#222] text-neo-white p-6 flex flex-col justify-between relative border-b-4 md:border-b-0 md:border-r-4 border-neo-white dark:border-gray-600">
@@ -333,13 +333,14 @@ const SmartSuitcase: React.FC = () => {
                     <div className="absolute top-24 text-center z-50 px-4">
                         <div className="inline-flex items-center gap-2 bg-neo-white border-3 border-neo-black px-5 py-2 rounded-full shadow-neo animate-bounce">
                             <RefreshCw size={16} className="animate-spin text-neo-pink" />
-                            <span className="font-black font-mono text-sm uppercase text-neo-black">{STATUS_MESSAGES[statusIndex]}</span>
+                            <span className="font-black font-mono text-xs md:text-sm uppercase text-neo-black">{STATUS_MESSAGES[statusIndex]}</span>
                         </div>
                     </div>
 
                     {/* 3D SUITCASE CONTAINER */}
+                    {/* SCALING ADDED HERE FOR MOBILE: scale-75 on base size, md:scale-100 */}
                     <div className={`
-                        relative w-[340px] h-[260px] preserve-3d transition-transform duration-500
+                        relative w-[340px] h-[260px] preserve-3d transition-transform duration-500 scale-[0.8] md:scale-100
                         ${suitcaseAnimation === 'drop-in' ? 'anim-drop' : ''}
                         ${suitcaseAnimation === 'shake' ? 'anim-shake' : ''}
                         ${suitcaseAnimation === 'exit' ? 'anim-exit' : ''}
@@ -492,13 +493,13 @@ const SmartSuitcase: React.FC = () => {
                     
                     {/* Header */}
                     <div className="p-4 md:p-6 border-b-4 border-neo-black dark:border-neo-white bg-neo-yellow text-neo-black shrink-0 flex justify-between items-center">
-                        <div>
-                            <h2 className="text-3xl md:text-5xl font-black font-display uppercase leading-none">{destination}</h2>
-                            <p className="font-mono text-xs font-bold mt-1">GENERATED MANIFEST • {list.reduce((acc, c) => acc + c.items.length, 0)} ITEMS</p>
+                        <div className="min-w-0 pr-4">
+                            <h2 className="text-2xl md:text-5xl font-black font-display uppercase leading-none truncate">{destination}</h2>
+                            <p className="font-mono text-[10px] md:text-xs font-bold mt-1">GENERATED MANIFEST • {list.reduce((acc, c) => acc + c.items.length, 0)} ITEMS</p>
                         </div>
                         <button 
                             onClick={() => setPhase('config')}
-                            className="bg-neo-black text-white px-4 py-2 font-bold uppercase text-xs hover:bg-white hover:text-black transition-colors border-2 border-transparent hover:border-neo-black flex items-center gap-2"
+                            className="bg-neo-black text-white px-3 py-2 font-bold uppercase text-[10px] md:text-xs hover:bg-white hover:text-black transition-colors border-2 border-transparent hover:border-neo-black flex items-center gap-2 shrink-0"
                         >
                             <RefreshCw size={14} /> Repack
                         </button>
@@ -514,7 +515,7 @@ const SmartSuitcase: React.FC = () => {
 
                     {/* Content */}
                     <div className="flex-1 overflow-y-auto custom-scrollbar p-4 md:p-8 bg-white dark:bg-[#111]">
-                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-20 md:pb-0">
                              {list.map((category, idx) => {
                                  const allChecked = category.items.every(item => checkedItems.has(item));
                                  const progress = category.items.filter(i => checkedItems.has(i)).length / category.items.length;

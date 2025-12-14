@@ -1,3 +1,4 @@
+
 import { GoogleGenAI, Type, Schema } from "@google/genai";
 import { TripItinerary, TripPreferences, LanguageTip, SouvenirGuide, PackingCategory, Song } from "../types";
 
@@ -115,13 +116,14 @@ export const generateItinerary = async (prefs: TripPreferences): Promise<TripIti
 };
 
 export const generateSouvenirs = async (destination: string, budget: string, duration: string): Promise<SouvenirGuide | null> => {
-    const prompt = `Create a complete souvenir guide for ${destination} (Budget: ${budget}, Duration: ${duration}).
-    Consider the trip duration: if short, suggest accessible items; if long, suggest custom or hard-to-find items.
-    1. List 8 unique souvenirs (mix of traditional, food, art, modern).
-    2. Determine the negotiation style (Fixed Price, Casual Bargaining, or Aggressive Bargaining).
-    3. Provide 3 specific negotiation tips for this culture.
-    4. List 3-5 restricted items or scams to avoid (e.g. "Ivory", "Fake Antiques").
-    5. List 4 unique "collectible stamps" or "postmarks" people can get here (e.g. Eki stamps in Japan, National Park passport stamps, museum ink stamps, or iconic post office cancellations).
+    // Optimization: Reduced item counts to prevent timeouts (XHR error)
+    const prompt = `Create a compact souvenir guide for ${destination} (Budget: ${budget}).
+    1. List 6 distinct souvenirs.
+    2. Determine negotiation style.
+    3. Provide 2 negotiation tips.
+    4. List 3 restricted items/scams.
+    5. List 3 unique "collectible stamps" or postmarks (e.g. Eki stamps, Museum stamps) with short locations.
+    6. Provide the approximate Latitude and Longitude for ${destination}.
     Return strictly JSON.`;
 
     const schema: Schema = {
@@ -164,9 +166,17 @@ export const generateSouvenirs = async (destination: string, budget: string, dur
             },
             required: ["name", "location", "description"]
           }
+        },
+        coordinates: {
+          type: Type.OBJECT,
+          properties: {
+            lat: { type: Type.NUMBER },
+            lng: { type: Type.NUMBER }
+          },
+          required: ["lat", "lng"]
         }
       },
-      required: ["items", "negotiationStyle", "negotiationTips", "restrictedItems", "collectibleStamps"]
+      required: ["items", "negotiationStyle", "negotiationTips", "restrictedItems", "collectibleStamps", "coordinates"]
     };
 
     try {
@@ -181,14 +191,13 @@ export const generateSouvenirs = async (destination: string, budget: string, dur
         return response.text ? JSON.parse(response.text) : null;
     } catch (e) {
         console.error("Souvenir Error", e);
-        return null;
+        throw e; // Re-throw to handle in UI
     }
 };
 
 export const generatePackingList = async (destination: string, month: string, type: string): Promise<PackingCategory[]> => {
     const prompt = `Create a smart packing list for ${destination} in ${month} for a ${type} trip.
-    Categorize items (e.g., Clothing, Tech, Toiletries, Documents).
-    Include weather-specific items for that month.
+    Categorize items.
     Return strictly JSON.`;
 
     const schema: Schema = {
@@ -231,11 +240,8 @@ export const chatWithConcierge = async (history: any[], message: string, itinera
       User Question: ${message}
       
       Answer briefly, helpfully, and with a friendly travel guide personality.
-      If asked about specific days, refer to the context implicitly.
     `;
 
-    // Construct simple history for now, appending the new message
-    // Note: For a real chat, we'd maintain the chat session object.
     const chat = ai.chats.create({
         model: 'gemini-2.5-flash',
         config: { systemInstruction: "You are a helpful travel assistant." }
@@ -281,8 +287,6 @@ export const getLanguageTips = async (destination: string): Promise<LanguageTip[
 
 export const generatePlaylist = async (destination: string, vibe: string): Promise<Song[]> => {
     const prompt = `Create a playlist of 8 songs that capture the vibe "${vibe}" for a trip to ${destination}.
-    Include a mix of local artists and songs that fit the atmosphere.
-    For each song, provide the title, artist, and a short reason why it fits.
     Return strictly JSON.`;
 
     const schema: Schema = {

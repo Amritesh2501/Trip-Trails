@@ -88,13 +88,13 @@ const TripForm: React.FC<TripFormProps> = ({ onSubmit, isLoading }) => {
       const StepIcon = currentStep.icon;
 
       return (
-          <div className="flex flex-col items-center justify-center w-full h-full min-h-[400px] animate-slide-up relative">
+          <div className="flex flex-col items-center justify-center w-full h-full min-h-[350px] md:min-h-[400px] animate-slide-up relative scale-90 md:scale-100 origin-center">
               
               {/* Decorative Printer Doodles */}
-              <div className="absolute top-10 left-10 text-neo-pink animate-pulse">
+              <div className="absolute top-10 left-10 text-neo-pink animate-pulse hidden md:block">
                   <Zap size={32} fill="currentColor" />
               </div>
-              <div className="absolute bottom-20 right-10 text-neo-blue animate-bounce">
+              <div className="absolute bottom-20 right-10 text-neo-blue animate-bounce hidden md:block">
                   <Star size={32} fill="currentColor" />
               </div>
 
@@ -126,7 +126,7 @@ const TripForm: React.FC<TripFormProps> = ({ onSubmit, isLoading }) => {
                       
                       {/* Ticket Header */}
                       <div className="w-full border-b-2 border-dashed border-neo-black pb-2 mb-1">
-                          <div className="font-black text-xl uppercase text-neo-black">WANDER.AI</div>
+                          <div className="font-black text-xl uppercase text-neo-black">TRIPTAILS</div>
                           <div className="font-mono text-[10px] text-neo-black">{new Date().toLocaleDateString()}</div>
                       </div>
 
@@ -178,7 +178,7 @@ const TripForm: React.FC<TripFormProps> = ({ onSubmit, isLoading }) => {
                     value={destination}
                     onChange={(e) => setDestination(e.target.value)}
                     placeholder="E.G. TOKYO, JAPAN"
-                    className="w-full border-3 border-neo-black dark:border-gray-500 p-3 md:p-4 text-lg md:text-xl font-bold font-mono placeholder:text-gray-400 focus:outline-none focus:bg-neo-yellow dark:focus:bg-neo-yellow focus:text-neo-black transition-colors shadow-neo-sm dark:shadow-none focus:shadow-neo dark:focus:shadow-none bg-white dark:bg-[#1A1A1A] text-neo-black dark:text-white"
+                    className="w-full border-3 border-neo-black dark:border-gray-500 p-3 md:p-4 text-base md:text-xl font-bold font-mono placeholder:text-gray-400 focus:outline-none focus:bg-neo-yellow dark:focus:bg-neo-yellow focus:text-neo-black transition-colors shadow-neo-sm dark:shadow-none focus:shadow-neo dark:focus:shadow-none bg-white dark:bg-[#1A1A1A] text-neo-black dark:text-white rounded-none md:rounded-sm"
                     autoFocus
                     required
                 />
@@ -193,16 +193,16 @@ const TripForm: React.FC<TripFormProps> = ({ onSubmit, isLoading }) => {
             
             <div className="space-y-2">
                 <label className="font-bold text-xs md:text-sm uppercase border-b-2 border-neo-black dark:border-gray-500 text-neo-black dark:text-white inline-block">Duration</label>
-                <div className="flex border-3 border-neo-black dark:border-gray-500 shadow-neo-sm dark:shadow-none bg-white dark:bg-[#1A1A1A] h-12 md:h-14 relative">
+                <div className="flex border-3 border-neo-black dark:border-gray-500 shadow-neo-sm dark:shadow-none bg-white dark:bg-[#1A1A1A] h-14 md:h-14 relative rounded-none md:rounded-sm">
                     {/* Sticker decoration */}
                     <div className="absolute -top-2 -left-2 text-neo-green z-10 hidden md:block"><Star size={16} fill="currentColor"/></div>
                     
                     <button 
                         type="button" 
                         onClick={() => setDuration(Math.max(1, duration - 1))} 
-                        className="w-12 md:w-14 flex items-center justify-center border-r-3 border-neo-black dark:border-gray-500 hover:bg-neo-pink active:bg-neo-black active:text-white transition-colors text-neo-black dark:text-white"
+                        className="w-14 flex items-center justify-center border-r-3 border-neo-black dark:border-gray-500 hover:bg-neo-pink active:bg-neo-black active:text-white transition-colors text-neo-black dark:text-white"
                     >
-                        <Minus size={18} strokeWidth={4} />
+                        <Minus size={20} strokeWidth={4} />
                     </button>
                     <div className="flex-1 flex items-center justify-center font-black text-lg md:text-xl text-neo-black dark:text-white">
                         {duration} DAYS
@@ -210,20 +210,20 @@ const TripForm: React.FC<TripFormProps> = ({ onSubmit, isLoading }) => {
                     <button 
                         type="button" 
                         onClick={() => setDuration(Math.min(30, duration + 1))} 
-                        className="w-12 md:w-14 flex items-center justify-center border-l-3 border-neo-black dark:border-gray-500 hover:bg-neo-green active:bg-neo-black active:text-white transition-colors text-neo-black dark:text-white"
+                        className="w-14 flex items-center justify-center border-l-3 border-neo-black dark:border-gray-500 hover:bg-neo-green active:bg-neo-black active:text-white transition-colors text-neo-black dark:text-white"
                     >
-                        <Plus size={18} strokeWidth={4} />
+                        <Plus size={20} strokeWidth={4} />
                     </button>
                 </div>
             </div>
 
             <div className="space-y-2">
                 <label className="font-bold text-xs md:text-sm uppercase border-b-2 border-neo-black dark:border-gray-500 text-neo-black dark:text-white inline-block">Month</label>
-                <div className="relative border-3 border-neo-black dark:border-gray-500 shadow-neo-sm dark:shadow-none bg-white dark:bg-[#1A1A1A] h-12 md:h-14">
+                <div className="relative border-3 border-neo-black dark:border-gray-500 shadow-neo-sm dark:shadow-none bg-white dark:bg-[#1A1A1A] h-14 md:h-14 rounded-none md:rounded-sm">
                     <select 
                         value={travelMonth}
                         onChange={(e) => setTravelMonth(e.target.value)}
-                        className="w-full h-full appearance-none px-4 md:px-4 text-lg md:text-xl font-black bg-transparent focus:outline-none cursor-pointer uppercase text-neo-black dark:text-white"
+                        className="w-full h-full appearance-none px-4 md:px-4 text-base md:text-xl font-black bg-transparent focus:outline-none cursor-pointer uppercase text-neo-black dark:text-white"
                     >
                         {MONTHS.map(m => <option key={m} value={m} className="text-neo-black">{m}</option>)}
                     </select>
@@ -247,7 +247,7 @@ const TripForm: React.FC<TripFormProps> = ({ onSubmit, isLoading }) => {
                             type="button"
                             onClick={() => setTravelers(t.id)}
                             className={`
-                                py-2 md:py-3 border-3 border-neo-black dark:border-gray-500 font-bold text-xs md:text-sm uppercase transition-all
+                                py-3 md:py-3 border-3 border-neo-black dark:border-gray-500 font-bold text-xs md:text-sm uppercase transition-all rounded-none md:rounded-sm
                                 ${travelers === t.id 
                                 ? 'bg-neo-black dark:bg-gray-200 text-neo-white dark:text-black shadow-none translate-x-[2px] translate-y-[2px]' 
                                 : 'bg-white dark:bg-[#1A1A1A] text-neo-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 shadow-neo-sm dark:shadow-none'}
@@ -268,7 +268,7 @@ const TripForm: React.FC<TripFormProps> = ({ onSubmit, isLoading }) => {
                             type="button"
                             onClick={() => setBudget(b.id as any)}
                             className={`
-                                py-2 md:py-3 border-3 border-neo-black dark:border-gray-500 font-black text-base md:text-lg uppercase transition-all
+                                py-3 md:py-3 border-3 border-neo-black dark:border-gray-500 font-black text-base md:text-lg uppercase transition-all rounded-none md:rounded-sm
                                 ${budget === b.id 
                                 ? 'bg-neo-green text-neo-black shadow-none translate-x-[2px] translate-y-[2px]' 
                                 : 'bg-white dark:bg-[#1A1A1A] text-neo-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 shadow-neo-sm dark:shadow-none'}
@@ -292,7 +292,7 @@ const TripForm: React.FC<TripFormProps> = ({ onSubmit, isLoading }) => {
                         type="button"
                         onClick={() => toggleInterest(interest)}
                         className={`
-                            px-3 md:px-4 py-1 md:py-2 border-3 border-neo-black dark:border-gray-500 font-bold text-xs md:text-sm uppercase transition-all rounded-full flex items-center gap-1
+                            px-3 md:px-4 py-2 md:py-2 border-3 border-neo-black dark:border-gray-500 font-bold text-xs md:text-sm uppercase transition-all rounded-full flex items-center gap-1
                             ${selectedInterests.includes(interest)
                             ? 'bg-neo-purple text-neo-black shadow-none translate-y-[2px]'
                             : 'bg-white dark:bg-[#1A1A1A] text-neo-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 shadow-neo-sm dark:shadow-none'}
@@ -307,7 +307,7 @@ const TripForm: React.FC<TripFormProps> = ({ onSubmit, isLoading }) => {
         {/* Submit */}
         <button
             type="submit"
-            className="w-full py-3 md:py-5 mt-4 bg-neo-blue border-3 border-neo-black dark:border-white shadow-neo dark:shadow-none font-black text-lg md:text-xl uppercase tracking-wider hover:bg-neo-pink hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all flex items-center justify-center gap-3 group text-neo-black"
+            className="w-full py-4 md:py-5 mt-4 bg-neo-blue border-3 border-neo-black dark:border-white shadow-neo dark:shadow-none font-black text-lg md:text-xl uppercase tracking-wider hover:bg-neo-pink hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all flex items-center justify-center gap-3 group text-neo-black rounded-none md:rounded-sm"
         >
             Generate Plan <ArrowRight size={20} strokeWidth={4} className="group-hover:translate-x-1 transition-transform" />
         </button>

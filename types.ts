@@ -1,3 +1,4 @@
+
 export interface Activity {
   name: string;
   description: string;
@@ -50,6 +51,7 @@ export interface TripPreferences {
 export interface ChatMessage {
   role: 'user' | 'model';
   text: string;
+  timestamp?: string;
 }
 
 export interface LanguageTip {
@@ -76,6 +78,10 @@ export interface SouvenirGuide {
     location: string;
     description: string;
   }[];
+  coordinates: {
+    lat: number;
+    lng: number;
+  };
 }
 
 export interface PackingCategory {

@@ -9,7 +9,7 @@ import { TripItinerary, TripPreferences } from './types';
 import { generateItinerary } from './services/geminiService';
 import { AlertTriangle, Globe, Moon, Sun, History, Trash2, Home } from 'lucide-react';
 
-const SPLASH_WORDS = ["EXPLORE", "DISCOVER", "TASTE", "VIBE", "WANDER.AI"];
+const SPLASH_WORDS = ["EXPLORE", "DISCOVER", "TASTE", "VIBE", "TRIPTAILS"];
 const SPLASH_COLORS = ["bg-neo-yellow", "bg-neo-pink", "bg-neo-green", "bg-neo-blue", "bg-neo-white"];
 
 type AppView = 'menu' | 'planner' | 'souvenirs' | 'suitcase';
@@ -118,36 +118,37 @@ const App: React.FC = () => {
         {/* Dynamic Background Layer */}
         <BackgroundLayer />
 
-        <div className="h-full w-full flex flex-col items-center justify-center bg-neo-bg dark:bg-[#050505] font-sans p-2 md:p-4 transition-colors duration-300 relative z-10">
+        <div className="h-full w-full flex flex-col items-center justify-center bg-neo-bg dark:bg-[#050505] font-sans p-0 md:p-4 transition-colors duration-300 relative z-10">
             
             <div className={`
-                transition-all duration-500 ease-in-out bg-neo-white dark:bg-[#0a0a0a] border-3 border-neo-black dark:border-gray-700 shadow-neo-lg dark:shadow-none flex flex-col overflow-hidden relative
+                transition-all duration-500 ease-in-out bg-neo-white dark:bg-[#0a0a0a] border-x-0 border-y-0 md:border-3 border-neo-black dark:border-gray-700 shadow-none md:shadow-neo-lg dark:md:shadow-none flex flex-col overflow-hidden relative
                 ${itinerary && view === 'planner'
-                    ? 'w-full max-w-[1600px] h-full md:h-[95vh] rounded-sm' 
-                    : 'w-full max-w-6xl h-full md:h-[90vh] rounded-sm'}
+                    ? 'w-full max-w-[1600px] h-full md:h-[95vh] rounded-none md:rounded-sm' 
+                    : 'w-full max-w-6xl h-full md:h-[90vh] rounded-none md:rounded-sm'}
             `}>
                 
                 {/* Header */}
-                <div className="bg-neo-black dark:bg-[#121212] text-neo-white border-b-3 border-neo-black dark:border-gray-800 p-2 md:p-3 flex justify-between items-center shrink-0 z-40">
-                    <div className="flex items-center gap-2">
-                        <Globe size={16} className="text-neo-blue animate-spin-slow" />
-                        <span className="ml-2 font-mono font-bold tracking-wider text-sm md:text-base">WANDER_OS_V2.1.exe</span>
+                <div className="bg-neo-black dark:bg-[#121212] text-neo-white border-b-3 border-neo-black dark:border-gray-800 p-3 md:p-3 flex justify-between items-center shrink-0 z-40">
+                    <div className="flex items-center gap-2 min-w-0">
+                        <Globe size={16} className="text-neo-blue animate-spin-slow shrink-0" />
+                        <span className="ml-2 font-mono font-bold tracking-wider text-sm md:text-base hidden md:inline truncate">TRIPTAILS_OS_V2.1.exe</span>
+                        <span className="ml-2 font-display font-black tracking-wider text-sm md:hidden">TRIPTAILS</span>
                     </div>
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-3 md:gap-4 shrink-0">
                          {view !== 'menu' && (
                              <button 
                                 onClick={() => setView('menu')}
-                                className="font-mono text-xs font-bold hover:text-neo-blue flex items-center gap-1 bg-neo-darkgray border border-white/20 px-2 py-1"
+                                className="font-black text-xs md:text-sm uppercase flex items-center gap-2 bg-neo-pink text-neo-black border-2 border-neo-black px-3 py-1.5 md:py-2 shadow-neo-sm hover:shadow-none hover:translate-x-[1px] hover:translate-y-[1px] transition-all"
                              >
-                                <Home size={14} /> MENU
+                                <Home size={16} strokeWidth={2.5} /> <span>MENU</span>
                              </button>
                          )}
                         {view === 'planner' && !itinerary && tripHistory.length > 0 && (
                             <button 
                                 onClick={() => setShowHistory(!showHistory)}
-                                className="font-mono text-xs font-bold hover:text-neo-pink flex items-center gap-1"
+                                className="font-mono text-[10px] md:text-xs font-bold hover:text-neo-pink flex items-center gap-1"
                             >
-                                <History size={14} /> HISTORY
+                                <History size={16} className="md:w-4 md:h-4" /> <span className="hidden md:inline">HISTORY</span>
                             </button>
                         )}
                         <button 
@@ -155,14 +156,14 @@ const App: React.FC = () => {
                             className="p-1 hover:text-neo-yellow transition-colors"
                             title="Toggle Theme"
                         >
-                            {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
+                            {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
                         </button>
                     </div>
                 </div>
 
                 {/* History Dropdown */}
                 {showHistory && view === 'planner' && !itinerary && (
-                    <div className="absolute top-12 right-2 md:right-4 z-50 w-64 bg-neo-white dark:bg-[#1A1A1A] border-3 border-neo-black dark:border-gray-600 shadow-neo">
+                    <div className="absolute top-16 right-2 md:right-4 z-50 w-64 bg-neo-white dark:bg-[#1A1A1A] border-3 border-neo-black dark:border-gray-600 shadow-neo">
                         <div className="p-2 border-b-2 border-neo-black dark:border-gray-600 flex justify-between items-center bg-gray-100 dark:bg-[#222]">
                             <span className="font-black text-xs uppercase text-neo-black dark:text-white">Recent Trips</span>
                             <button onClick={clearHistory} className="text-red-500 hover:bg-red-100 dark:hover:bg-red-900 p-1 rounded"><Trash2 size={12}/></button>
@@ -203,16 +204,16 @@ const App: React.FC = () => {
                         ) : (
                             <div className={`p-4 md:p-10 flex flex-col items-center overflow-y-auto custom-scrollbar h-full ${isLoading ? 'justify-center' : ''} relative`}>
                                 {!isLoading && (
-                                    <div className="mb-4 md:mb-8 text-center relative w-full shrink-0">
+                                    <div className="mb-4 md:mb-8 text-center relative w-full shrink-0 mt-4 md:mt-0">
                                         <div className="absolute -top-6 -right-4 bg-neo-pink text-neo-black font-black text-xs px-2 py-1 border-2 border-neo-black dark:border-neo-white shadow-neo-sm dark:shadow-neo-sm-white transform rotate-12 animate-bounce hidden md:block">
                                             NEW!
                                         </div>
-                                        <h1 className="text-3xl md:text-6xl font-display font-black tracking-tighter mb-2 leading-[0.9] dark:text-neo-white">
+                                        <h1 className="text-4xl md:text-6xl font-display font-black tracking-tighter mb-2 leading-[0.9] dark:text-neo-white">
                                             TRIP<br/>
                                             <span className="text-neo-blue text-stroke-3 dark:text-stroke-white">ADVISOR</span>
                                         </h1>
-                                        <p className="font-bold text-xs md:text-lg mt-2 bg-neo-yellow text-neo-black inline-block px-4 py-1 border-2 border-neo-black dark:border-neo-white shadow-neo-sm dark:shadow-neo-sm-white">
-                                            AI-POWERED ITINERARY BOT
+                                        <p className="font-bold text-[10px] md:text-lg mt-2 bg-neo-yellow text-neo-black inline-block px-4 py-1 border-2 border-neo-black dark:border-neo-white shadow-neo-sm dark:shadow-neo-sm-white uppercase">
+                                            AI-Powered Itinerary Bot
                                         </p>
                                     </div>
                                 )}
@@ -236,9 +237,9 @@ const App: React.FC = () => {
                 </div>
                 
                 {/* Footer */}
-                <div className="shrink-0 border-t-3 border-neo-black dark:border-gray-800 bg-gray-100 dark:bg-[#121212] p-2 font-mono text-[10px] md:text-xs flex justify-between items-center text-gray-500 dark:text-gray-400">
-                    <span>MODULE: {view.toUpperCase()}</span>
-                    <span>DESIGNED BY AMRITESH</span>
+                <div className="shrink-0 border-t-3 border-neo-black dark:border-gray-800 bg-gray-100 dark:bg-[#121212] p-2 font-mono text-[10px] flex justify-between items-center text-gray-500 dark:text-gray-400 safe-area-bottom">
+                    <span>MOD: {view.toUpperCase()}</span>
+                    <span>AMRITESH // V2.1</span>
                 </div>
             </div>
         </div>
