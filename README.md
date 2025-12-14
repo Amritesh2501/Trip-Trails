@@ -49,6 +49,12 @@ VoyagerAI is an AI-powered travel planning application that creates personalized
 
 ---
 
+🙌 Author
+
+Built with ❤️ by Amritesh Tiwari
+
+⭐ If you like this project, don’t forget to star the repository!
+
 ## 📦 Installation
 
 ```bash
