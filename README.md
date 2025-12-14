@@ -1,53 +1,54 @@
-# VoyagerAI 🌍✈️  
-Your Intelligent, All-in-One Travel Companion
+# Trip-Trails 🌍✈️  
+AI-Powered Intelligent Travel Planner
 
-VoyagerAI is an AI-powered travel planning application that creates personalized and detailed itineraries. It helps travelers plan, budget, pack, explore, and get real-time assistance — all in one place.
+Trip-Trails is an AI-driven travel planning application designed to create personalized, detailed, and immersive travel experiences. It helps users plan their trips, manage budgets, pack smartly, explore destinations, and get real-time assistance — all in one place.
 
 ---
 
 ## 🚀 Features
 
 - **AI-Powered Itinerary Generation**  
-  Personalized day-by-day travel plans based on destination, duration, budget, interests, and group type.
+  Generates personalized, day-by-day itineraries based on destination, travel dates, duration, budget, interests, and group type.
 
 - **Budget Management**  
-  Smart budget breakdown for accommodation, food, transport, activities, and miscellaneous expenses.
+  Provides a detailed cost breakdown for accommodation, food, transportation, activities, and miscellaneous expenses.
 
 - **Interactive Maps**  
-  Visualize itinerary locations and explore nearby places using dynamic maps.
+  Visualize planned activities and locations using interactive maps for easier navigation and exploration.
 
 - **Smart Suitcase**  
-  AI-generated packing lists based on weather, culture, and trip type with an interactive checklist.
+  Creates intelligent packing lists based on destination weather, local culture, and trip type, with an interactive checklist.
 
 - **Souvenir Scout**  
-  Discover authentic local souvenirs, cultural tips, scam warnings, and collect digital travel stamps.
+  Helps users discover authentic local souvenirs, offers cultural tips, scam warnings, and includes a digital travel passport feature.
 
 - **Sonic Souvenirs**  
-  Curated music playlists that match the vibe of your destination.
+  Curated music playlists that reflect the vibe and culture of the destination.
 
 - **Pocket Concierge**  
-  Real-time AI chatbot to assist during planning and while traveling.
+  An AI-powered chatbot that assists users during planning and while traveling with recommendations and real-time help.
 
 - **Language Tips**  
-  Essential phrases and pronunciation guides for local communication.
+  Provides essential phrases and pronunciation guides to help users communicate locally.
 
 - **Theme Customization**  
-  Dynamic UI themes based on destination type (Tropical, Urban, Romantic, Adventure).
+  The app’s UI adapts visually based on the destination theme such as Tropical, Urban, Romantic, or Adventure.
 
 - **PDF Export**  
-  Export itineraries, budgets, and packing lists for offline access.
+  Export itineraries, budgets, and packing lists as PDF files for offline access.
 
 ---
 
 ## 🛠️ Tech Stack
 
 - **Frontend:** React, Tailwind CSS  
-- **AI:** Google Gemini API  
+- **AI Integration:** Google Gemini API  
 - **Maps:** Leaflet  
-- **Charts:** Recharts  
+- **Data Visualization:** Recharts  
 - **PDF Export:** html2canvas, jsPDF  
 
 ---
+
 
 🙌 Author
 
